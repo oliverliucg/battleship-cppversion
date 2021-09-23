@@ -1,0 +1,23 @@
+#include<cstdio>
+
+const String dottedLine = "=====================================";
+
+const String placeInstru1 = "Player A: you are going to place the following ships (which are all rectangular). You have\n";
+
+const String placeInstru2 = "
+2 Submarines that are 1x2 rectangles (represented by "s")
+3 Destroyers that are 1x3 rectangles (represented by "d")
+3 Battleships that are shaped as shown below
+    b      OR    b         bbb         b
+   bbb           bb   OR    b     OR  bb
+                 b                      b
+    Up          Right      Down      Left
+2 Carriers that are shaped as shown below
+        c                        c            
+       c            ccc          c         
+      cc   OR    ccc      OR  cc     OR  ccc     
+      c                       c             ccc 
+     c                       c
+    Up           Right     Down          Left
+For Submarines and Destroyers, putin the coordinate of the upper left side of the ship, followed by either H (for horizontal) or V(for vertical). For example M4H place a ship horizontally starting at M4 and going to the right.
+For Battleships and Carriers, type the coordinate of the top left of the ship while followed by R（right）D（down）L（left）U（up）. For example M4U place a ship horizontally starting at M4 and going to the up."
