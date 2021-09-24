@@ -1,0 +1,6 @@
+#include <cstdlib>
+#include <cstdio>
+#include "Board.hpp"
+bool outOfBound(Board b,Ship s){
+  
+}
