@@ -1,0 +1,9 @@
+#include "Board.cpp"
+#include <cstdlib>
+#include <cstdio>
+
+int main(void){
+  Board b;
+  show(b,b,true);
+  return EXIT_SUCCESS;
+}

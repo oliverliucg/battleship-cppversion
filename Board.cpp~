@@ -1,0 +1,26 @@
+#include "Board.h"
+#include <iostream>
+void show(Board myself, Board other, bool isOnlyMyself){
+  if(isOnlyMyself==false){
+    }else{
+    //print myself
+    for(char i = '/';i<='9';i++){
+      for(char j = '@';j<='U';j++){
+	if(j=='@'||j=='U'){
+	  if(i=='/'||i=='5'){
+	    printf(" |");
+	    //cout<<' '<<'|';
+	  }else if(i>='1'&&i<='4'){
+	    printf(" |");
+	    //cout<<i<<'|';
+	  }
+	  //cout<<endl;
+	}else if(j>='A'&&j<='T'){
+	  printf(" |");
+	  //cout<<' '<<'|';
+	}
+      }
+    }
+    //cout<<endl;
+  }
+}
