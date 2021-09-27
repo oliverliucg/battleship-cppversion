@@ -1,0 +1,32 @@
+#include "Coordinate.h"
+#include "MyException.h"
+
+using std::toupper;
+Coordinate::Coordinate(string descr){
+    if(descr.length() != 2){
+        throw new MyException("Error: the length of string to build coordinate is not equal to 2\n");
+    }
+    char firstChar = toupper(descr[0]);
+    char secondChar = toupper(descr[1]);
+    if(firstChar < 'A' || firstChar > 'Z'){
+        throw new MyException("Error: The first charactor of string should be a uppercase-letter\n");
+    }
+    if(secondChar < '0' || secondChar > '9'){
+        throw new MyException("Error: The second charactor should be a single number\n");
+    }
+    this->row = firstChar-'A';
+    this->column = secondChar-'0';
+}
+
+Coordinate::Coordinate(const Coordinate& other){
+    this->row = other.row;
+    this->column = other.column;
+}
+
+Coordinate& Coordinate::operator=(const Coordinate& other){
+    if(this != &other){
+        this->row = other.row;
+        this->column = other.column;
+    }
+    return (*this);
+}
