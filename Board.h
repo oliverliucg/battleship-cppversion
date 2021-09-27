@@ -11,6 +11,7 @@ class Board{
   int height;
   //std::vector<Ship>;
   std::set<pair<char,char> > miss;
+  std::set<Ship> ships;
  public:
   int getWidth(){
     return width;
