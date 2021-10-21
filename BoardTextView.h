@@ -5,23 +5,26 @@
 #ifndef BATTLESHIP_CPPVERSION_BOARDTEXTVIEW_H
 #define BATTLESHIP_CPPVERSION_BOARDTEXTVIEW_H
 
-#include "MyException.h"
 #include "Board.h"
 #include "Coordinate.h"
+#include "MyException.h"
 #include "ordinary.h"
 
-class BoardTextView{
+class BoardTextView {
 private:
-    std::shared_ptr<Board<char> > toDisplay;
-    string makeHeader();
+  std::shared_ptr<Board<char>> toDisplay;
+  string makeHeader();
+
 protected:
-    string displayAnyBoard(bool isMyBoard);
+  string displayAnyBoard(bool isMyBoard);
+
 public:
-    BoardTextView();
-    BoardTextView(std::shared_ptr<Board<char> > _toDisplay);
-    string displayMyOwnBoard();
-    string displayEnemyBoard();
-    string displayMyBoardWithEnemyNextToIt(BoardTextView enemyView, string myHeader, string enemyHeader);
+  BoardTextView();
+  BoardTextView(std::shared_ptr<Board<char>> _toDisplay);
+  string displayMyOwnBoard();
+  string displayEnemyBoard();
+  string displayMyBoardWithEnemyNextToIt(BoardTextView enemyView,
+                                         string myHeader, string enemyHeader);
 };
 
-#endif //BATTLESHIP_CPPVERSION_BOARDTEXTVIEW_H
+#endif // BATTLESHIP_CPPVERSION_BOARDTEXTVIEW_H

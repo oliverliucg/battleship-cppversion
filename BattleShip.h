@@ -10,19 +10,17 @@ protected:
 
 public:
   BattleShip(Coordinate _upperLeft, char _orientation,
-             std::unique_ptr<SimpleShipDisplayInfo<T> > myDisplayInfo,
-             std::unique_ptr<SimpleShipDisplayInfo<T> > enemyDisplayInfo);
-  BattleShip(Coordinate _upperLeft, char _orientation, T data,
-             T onHit);
+             std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
+             std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo);
+  BattleShip(Coordinate _upperLeft, char _orientation, T data, T onHit);
   static const string name;
 };
 
-template <typename T>
-const string BattleShip<T>::name = "Battleship";
+template <typename T> const string BattleShip<T>::name = "Battleship";
 
 template <typename T>
 vector<Coordinate> BattleShip<T>::makeCoords(Coordinate upperLeft,
-                                                    char orientation) {
+                                             char orientation) {
   vector<Coordinate> res;
   int startRow = upperLeft.getRow();
   int startColumn = upperLeft.getColumn();
@@ -56,20 +54,18 @@ vector<Coordinate> BattleShip<T>::makeCoords(Coordinate upperLeft,
 }
 
 template <typename T>
-BattleShip<T>::BattleShip(Coordinate _upperLeft,
-                          char _orientation,
-                          std::unique_ptr<SimpleShipDisplayInfo<T> > myDisplayInfo,
-                          std::unique_ptr<SimpleShipDisplayInfo<T> > enemyDisplayInfo)
-    : BasicShip<T>(_upperLeft, makeCoords(_upperLeft, _orientation), std::move(myDisplayInfo),
-                   std::move(enemyDisplayInfo)) {
-}
+BattleShip<T>::BattleShip(
+    Coordinate _upperLeft, char _orientation,
+    std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
+    std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo)
+    : BasicShip<T>(_upperLeft, makeCoords(_upperLeft, _orientation),
+                   std::move(myDisplayInfo), std::move(enemyDisplayInfo)) {}
 
 template <typename T>
-BattleShip<T>::BattleShip( Coordinate _upperLeft,
-                          char _orientation, T data, T onHit)
+BattleShip<T>::BattleShip(Coordinate _upperLeft, char _orientation, T data,
+                          T onHit)
     : BattleShip<T>(_upperLeft, _orientation,
-                    std::make_unique<SimpleShipDisplayInfo<T> >(data, onHit),
-                    std::make_unique<SimpleShipDisplayInfo<T> >(T(), data)){}
+                    std::make_unique<SimpleShipDisplayInfo<T>>(data, onHit),
+                    std::make_unique<SimpleShipDisplayInfo<T>>(T(), data)) {}
 
-
-#endif //BATTLESHIP_CPPVERSION_BATTLESHIP_H
+#endif // BATTLESHIP_CPPVERSION_BATTLESHIP_H

@@ -3,14 +3,14 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <vector>
-#include <string>
 #include <sstream>
+#include <string>
+#include <vector>
 
-using std::vector;
+using std::getline;
 using std::string;
 using std::stringstream;
-using std::getline;
+using std::vector;
 
 int randomlyPickFrom(int a, int b);
 
@@ -20,4 +20,4 @@ string strToUppercase(string s);
 
 string strToLowercase(string s);
 
-#endif //BATTLESHIP_CPPVERSION_ORDINARY_H
+#endif // BATTLESHIP_CPPVERSION_ORDINARY_H

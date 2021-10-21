@@ -5,14 +5,14 @@
 #ifndef BATTLESHIP_CPPVERSION_APP_H
 #define BATTLESHIP_CPPVERSION_APP_H
 
-#include "TextPlayer.h"
 #include "BattleShipBoard.h"
 #include "ShipFactory.h"
+#include "TextPlayer.h"
 
-class App{
+class App {
 public:
-    TextPlayer player1, player2;
-    App(TextPlayer _player1, TextPlayer _player2);
-    void doPlacementPhase();
+  TextPlayer player1, player2;
+  App(TextPlayer _player1, TextPlayer _player2);
+  void doPlacementPhase();
 };
-#endif //BATTLESHIP_CPPVERSION_APP_H
+#endif // BATTLESHIP_CPPVERSION_APP_H
