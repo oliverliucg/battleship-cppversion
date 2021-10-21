@@ -2,61 +2,28 @@
 #include <cstdlib>
 #include <cstdio>
 #include <utility>
+#include <vector>
 #include <unordered_set>
-
+#include <unordered_map>
+#include "Coordinate.h"
+#include "Placement.h"
 using std::unordered_set;
 using std::pair;
 using std::make_pair;
+using std::unordered_map;
+using std::vector;
 
 typedef pair<char, char> Point;
 template<typename T>
 class Ship{
-protected:
-    unordered_set<Point> points;
-    Point upperLeft;
-    T direction;
-    int x;
 public:
-    Ship(Point _upperLeft, T _direction):upperLeft(_upperLeft), direction(_direction){}
-};
-
-template<typename T>
-class RectangleShip: public Ship<T>{
-protected:
-    int height;
-    int width;
-public:
-    RectangleShip(Point _upperLeft, char _direction, int _height, int _width):Ship<T>(_upperLeft, _direction), height(_height), width(_width){
-        for(int r = 0; r < height; ++r){
-            for(int l = 0; l < width; ++l){
-                points.insert(make_pair((int)upperLeft.row+r, (int)upperLeft.col+l));
-            }
-        }
-    }
-};
-
-// ** or *
-//       *
-template<typename T>
-class Submarine: public RectangleShip<T>{
-private:
-
-public:
-    Submarine(Point _upperLeft, T _direction):RectangleShip<T>(_upperLeft, _direction){
-        
-    }
-};
-
-// *** or *
-//        *
-//        *
-template<typename T>
-class Destroyer: public RectangleShip<T>{
-private:
-
-public:
-    Destroyer(Point _upperLeft, T _direction):RectangleShip<T>(_upperLeft, _direction){
-        
-    }
+    virtual bool occupyCoordinates(Coordinate where) = 0;
+    virtual bool isSunk() = 0;
+    virtual bool wasHitAt(Coordinate where) = 0;
+    virtual void recordHitAt(Coordinate where) = 0;
+    virtual void moveTo(Placement p);
+    virtual T getDisplayAt(Coordinate where, bool myShip) = 0;
+    virtual vector<Coordinate> getCoordinates() = 0;
+    virtual Coordinate getUpperLeft() = 0;
 };
 

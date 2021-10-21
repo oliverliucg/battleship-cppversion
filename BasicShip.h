@@ -1,3 +1,6 @@
+#ifndef BATTLESHIP_CPPVERSION_BASICSHIP_H
+#define BATTLESHIP_CPPVERSION_BASICSHIP_H
+
 #include "Ship.h"
 #include "ShipDisplayInfo.h"
 
@@ -5,22 +8,19 @@ template <typename T>
 class BasicShip : public Ship<T> {
 protected:
   Coordinate upperLeft;
-  unordered_map<Coordinate, bool> myPieces;
-  ShipDisplayInfo<T> myDisplayInfo;
-  ShipDisplayInfo<T> enemyDisplayInfo;
+  map<Coordinate, bool> myPieces;
+  std::unique_ptr<ShipDisplayInfo<T> > myDisplayInfo;
+  std::unique_ptr<ShipDisplayInfo<T> >  enemyDisplayInfo;
 
     void checkCoordinateInThisShip(Coordinate c);
 public:
-  BasicShip(Coordinate _upperLeft, unordered_set<Coordinate> where,
-            ShipDisplayInfo<T> _myDisplayInfo,
-            ShipDisplayInfo<T> _enemyDisplayInfo)
-      : upperLeft(_upperLeft), myDisplayInfo(_myDisplayInfo),
-        enemyDisplayInfo(_enemyDisplayInfo) {
-    unordered_set<Coordinate>::iterator it = where.begin();
-    while (it != where.end()) {
-     // true means hit
-      myPieces[*it] = false;
-      ++it;
+  BasicShip(Coordinate _upperLeft, vector<Coordinate> where,
+            std::unique_ptr<ShipDisplayInfo<T> > _myDisplayInfo,
+            std::unique_ptr<ShipDisplayInfo<T> > _enemyDisplayInfo)
+      : upperLeft(_upperLeft), myDisplayInfo(std::move(_myDisplayInfo)),
+        enemyDisplayInfo(std::move(_enemyDisplayInfo)) {
+    for(const auto& x : where){
+        myPieces[x]  = false;
     }
   }
 
@@ -29,8 +29,8 @@ public:
     virtual bool wasHitAt(Coordinate where);
     virtual void recordHitAt(Coordinate where);
     virtual void moveTo(Placement p);
-    virtual T getDisplayAt(Coordinate where, bool myShip) ;
-    virtual unordered_set<Coordinate> getCoordinates();
+    virtual std::unique_ptr<T> getDisplayInfoAt(Coordinate where, bool myShip) ;
+    virtual vector<Coordinate> getCoordinates();
     virtual Coordinate getUpperLeft(); 
 };
 
@@ -48,7 +48,7 @@ bool BasicShip<T>::occupyCoordinates(Coordinate where){
 
 template<typename T>
 bool BasicShip<T>::isSunk(){
-    unordered_map<Coordinate, bool>::iterator it = myPieces.begin();
+    map<Coordinate, bool>::iterator it = myPieces.begin();
     while(it != myPieces.end()){
         if(!it->second){
             return false;
@@ -74,21 +74,21 @@ void BasicShip<T>::moveTo(Placement p){
 }
 
 template<typename T>
-T BasicShip<T>::getDisplayAt(Coordinate where, bool myShip){
+unique_ptr<T> BasicShip<T>::getDisplayInfoAt(Coordinate where, bool myShip){
     checkCoordinateInThisShip(where);
     if(myShip){
-        return myDisplayInfo.getInfo(where, wasHitAt(where));
+        return myDisplayInfo->getInfo(where, wasHitAt(where));
     }else{
-        return enemyDisplayInfo.getInfo(where, wasHitAt(where));
+        return enemyDisplayInfo->getInfo(where, wasHitAt(where));
     }
 }
 
 template<typename T>
-unordered_set<Coordinate> BasicShip<T>::getCoordinates(){
-    unordered_set<Coordinate> keys;
-    unordered_map<Coordinate, bool>::iterator it = myPieces.begin();
+vector<Coordinate> BasicShip<T>::getCoordinates(){
+    vector<Coordinate> keys;
+    map<Coordinate, bool>::iterator it = myPieces.begin();
     while(it != myPieces.end()){
-        keys.insert(it->first);
+        keys.emplace_back(it->first);
         ++it;
     }
     return keys;
@@ -99,4 +99,4 @@ Coordinate BasicShip<T>::getUpperLeft(){
     return upperLeft;
 }
 
-
+#endif //BATTLESHIP_CPPVERSION_BASICSHIP_H

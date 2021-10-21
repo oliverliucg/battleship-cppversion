@@ -1,16 +1,20 @@
+#ifndef BATTLESHIP_CPPVERSION_MYEXCEPTION_H
+#define BATTLESHIP_CPPVERSION_MYEXCEPTION_H
+
 #include <string>
 #include <exception>
 using std::exception;
 using std::string;
 
-class MyException : public exception
-{   
+class MyException : public exception{ 
 private:
-    /* data */
-    const char* exceptionMessage;
+    string message;
 public:
-    MyException(const char* _exceptionMessage) : exceptionMessage(_exceptionMessage){}
-    const char* what() const throw() {
-        return exceptionMessage;
+    MyException(const string& _message) : message(_message+"\n"){
+    }
+    const char* what() const noexcept override{
+        return message.c_str();
     }
 };
+
+#endif //BATTLESHIP_CPPVERSION_MYEXCEPTION_H

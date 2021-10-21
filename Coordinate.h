@@ -1,3 +1,6 @@
+
+#ifndef BATTLESHIP_CPPVERSION_COORDINATE_H
+#define BATTLESHIP_CPPVERSION_COORDINATE_H
 #include <string>
 using std::string;
 
@@ -13,5 +16,11 @@ public:
     Coordinate& operator=(const Coordinate& other);
     int getRow(){return row;}
     int getColumn(){return column;}
+    string toString();
+    int toHashCode();
+    friend bool operator==(const Coordinate &lhs, const Coordinate &rhs);
+    friend bool operator<(const Coordinate &lhs, const Coordinate &rhs);
 };
 
+
+#endif //BATTLESHIP_CPPVERSION_COORDINATE_H
