@@ -15,7 +15,6 @@ using std::make_pair;
 using std::map;
 using std::vector;
 
-typedef pair<char, char> Point;
 template<typename T>
 class Ship{
 public:
