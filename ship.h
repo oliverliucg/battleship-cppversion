@@ -1,16 +1,18 @@
+#ifndef BATTLESHIP_CPPVERSION_SHIP_H
+#define BATTLESHIP_CPPVERSION_SHIP_H
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
 #include <utility>
 #include <vector>
-#include <unordered_set>
-#include <unordered_map>
+#include <set>
+#include <map>
 #include "Coordinate.h"
 #include "Placement.h"
-using std::unordered_set;
+using std::set;
 using std::pair;
 using std::make_pair;
-using std::unordered_map;
+using std::map;
 using std::vector;
 
 typedef pair<char, char> Point;
@@ -21,9 +23,10 @@ public:
     virtual bool isSunk() = 0;
     virtual bool wasHitAt(Coordinate where) = 0;
     virtual void recordHitAt(Coordinate where) = 0;
-    virtual void moveTo(Placement p);
-    virtual T getDisplayAt(Coordinate where, bool myShip) = 0;
+    virtual void moveTo(Placement p) = 0;
+    virtual std::unique_ptr<T> getDisplayInfoAt(Coordinate where, bool myShip) = 0;
     virtual vector<Coordinate> getCoordinates() = 0;
     virtual Coordinate getUpperLeft() = 0;
 };
 
+#endif //BATTLESHIP_CPPVERSION_SHIP_H
