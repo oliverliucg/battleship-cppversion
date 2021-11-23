@@ -11,7 +11,20 @@ void App::doPlacementPhase() {
   player1.doPlacementPhase();
   player2.doPlacementPhase();
 }
-
+void App::doAttackingPhase() {
+    do{
+        player1.playOneTurn(player2.theBoard, player2.view, player2.name);
+        if(player2.ifHasLost()){
+            cout << "Player " << player1.name << " wins!" << endl;
+            return;
+        }
+        player2.playOneTurn(player1.theBoard, player1.view, player1.name);
+        if(player1.ifHasLost()){
+            cout << "Player " << player2.name << " wins!" << endl;
+            return;
+        }
+    }while(true);
+}
 int main(int argv, char **argc) {
   std::shared_ptr<Board<char>> b1 =
       std::make_shared<BattleShipBoard<char>>(10, 20, 'X');
@@ -23,5 +36,6 @@ int main(int argv, char **argc) {
   TextPlayer p2("B", b2, factory);
   App app(p1, p2);
   app.doPlacementPhase();
+  app.doAttackingPhase();
   return EXIT_SUCCESS;
 }

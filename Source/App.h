@@ -14,5 +14,6 @@ public:
   TextPlayer player1, player2;
   App(TextPlayer _player1, TextPlayer _player2);
   void doPlacementPhase();
+  void doAttackingPhase();
 };
 #endif // BATTLESHIP_CPPVERSION_APP_H

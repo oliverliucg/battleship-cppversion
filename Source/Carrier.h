@@ -9,14 +9,12 @@ protected:
   static vector<Coordinate> makeCoords(Coordinate upperLeft, char orientation);
 
 public:
-  Carrier(Coordinate _upperLeft, char _orientation,
+  Carrier(string _name, Coordinate _upperLeft, char _orientation,
           std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
           std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo);
-  Carrier(Coordinate _upperLeft, char _orientation, T data, T onHit);
-  static const string name;
+  Carrier(string _name, Coordinate _upperLeft, char _orientation, std::shared_ptr<T> data, std::shared_ptr<T> onHit);
 };
 
-template <typename T> const std::string Carrier<T>::name = "Carrier";
 
 template <typename T>
 vector<Coordinate> Carrier<T>::makeCoords(Coordinate upperLeft,
@@ -62,16 +60,16 @@ vector<Coordinate> Carrier<T>::makeCoords(Coordinate upperLeft,
 }
 
 template <typename T>
-Carrier<T>::Carrier(Coordinate _upperLeft, char _orientation,
+Carrier<T>::Carrier(string _name, Coordinate _upperLeft, char _orientation,
                     std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
                     std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo)
-    : BasicShip<T>(_upperLeft, makeCoords(_upperLeft, _orientation),
+    : BasicShip<T>(_name, _upperLeft, makeCoords(_upperLeft, _orientation),
                    std::move(myDisplayInfo), std::move(enemyDisplayInfo)) {}
 
 template <typename T>
-Carrier<T>::Carrier(Coordinate _upperLeft, char _orientation, T data, T onHit)
-    : Carrier(_upperLeft, _orientation,
+Carrier<T>::Carrier(string _name, Coordinate _upperLeft, char _orientation, std::shared_ptr<T> data, std::shared_ptr<T> onHit)
+    : Carrier(_name, _upperLeft, _orientation,
               std::make_unique<SimpleShipDisplayInfo<T>>(data, onHit),
-              std::make_unique<SimpleShipDisplayInfo<T>>(T(), data)) {}
+              std::make_unique<SimpleShipDisplayInfo<T>>(nullptr, data)) {}
 
 #endif // BATTLESHIP_CPPVERSION_CARRIER_H

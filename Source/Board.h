@@ -12,8 +12,8 @@ public:
   virtual int getWidth() = 0;
   virtual int getHeight() = 0;
   virtual string tryAddShip(std::shared_ptr<Ship<T>> toAdd) = 0;
-  virtual std::unique_ptr<T> whatIsAtForSelf(Coordinate where) = 0;
-  virtual std::unique_ptr<T> whatIsAtForEnemy(Coordinate where) = 0;
+  virtual shared_ptr<T> whatIsAtForSelf(Coordinate where) = 0;
+  virtual shared_ptr<T> whatIsAtForEnemy(Coordinate where) = 0;
   virtual shared_ptr<Ship<T>> fireAt(Coordinate c) = 0;
   virtual bool ifAllSunk() = 0;
   virtual bool move(Coordinate c, Placement p) = 0;

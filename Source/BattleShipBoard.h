@@ -17,7 +17,7 @@ private:
   const unique_ptr<PlacementRuleChecker<T>> placementRuleChecker;
 
 protected:
-  std::unique_ptr<T> whatIsAt(Coordinate where, bool isSelf);
+    std::shared_ptr<T> whatIsAt(Coordinate where, bool isSelf);
   string removeShipFromBoardIfExist(Coordinate where);
 
 public:
@@ -35,8 +35,8 @@ public:
   int getHeight();
   string tryAddShip(std::shared_ptr<Ship<T>> toAdd);
   int numOfShips();
-  std::unique_ptr<T> whatIsAtForSelf(Coordinate where);
-  std::unique_ptr<T> whatIsAtForEnemy(Coordinate where);
+    shared_ptr<T> whatIsAtForSelf(Coordinate where);
+    shared_ptr<T> whatIsAtForEnemy(Coordinate where);
   shared_ptr<Ship<T>> fireAt(Coordinate c);
   bool ifAllSunk();
   bool move(Coordinate c, Placement p);
@@ -51,14 +51,14 @@ public:
 };
 
 template <typename T>
-unique_ptr<T> BattleShipBoard<T>::whatIsAt(Coordinate where, bool isSelf) {
+std::shared_ptr<T> BattleShipBoard<T>::whatIsAt(Coordinate where, bool isSelf) {
   for (shared_ptr<Ship<T>> s : myShips) {
     if (s->occupyCoordinates(where)) {
       return s->getDisplayInfoAt(where, isSelf);
     }
   }
   if (!isSelf && enemyMisses.count(where)) {
-    return std::make_unique<T>(missInfo);
+    return std::make_shared<T>(missInfo);
   }
   return nullptr;
 }
@@ -139,12 +139,12 @@ string BattleShipBoard<T>::tryAddShip(shared_ptr<Ship<T>> toAdd) {
 }
 
 template <typename T>
-unique_ptr<T> BattleShipBoard<T>::whatIsAtForSelf(Coordinate where) {
+shared_ptr<T> BattleShipBoard<T>::whatIsAtForSelf(Coordinate where) {
   return whatIsAt(where, true);
 }
 
 template <typename T>
-unique_ptr<T> BattleShipBoard<T>::whatIsAtForEnemy(Coordinate where) {
+shared_ptr<T> BattleShipBoard<T>::whatIsAtForEnemy(Coordinate where) {
   return whatIsAt(where, false);
 }
 
@@ -161,11 +161,13 @@ shared_ptr<Ship<T>> BattleShipBoard<T>::fireAt(Coordinate c) {
 }
 
 template <typename T> bool BattleShipBoard<T>::ifAllSunk() {
+    std::cout << "ifAllSunk()+++" << std::endl;
   for (std::shared_ptr<Ship<T>> s : myShips) {
     if (!s->isSunk()) {
       return false;
     }
   }
+    std::cout << "ifAllSunk()---" << std::endl;
   return true;
 }
 
@@ -198,9 +200,9 @@ template <typename T> bool BattleShipBoard<T>::move(Coordinate c, Placement p) {
 template <typename T>
 int BattleShipBoard<T>::sonarScanning(Coordinate c, T target) {
   int row = c.getRow(), column = c.getColumn(), count = 0;
-  std::unique_ptr<T> temp = nullptr;
+    shared_ptr<T> temp = nullptr;
   for (int i = row + 3; i >= row - 3; --i) {
-    std::unique_ptr<T> temp = whatIsAtForSelf(Coordinate(i, column));
+      temp = whatIsAtForSelf(Coordinate(i, column));
     if (temp != nullptr && target == *temp) {
       ++count;
     }

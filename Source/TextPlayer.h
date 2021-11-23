@@ -15,6 +15,7 @@
 
 using std::cin;
 using std::cout;
+using std::endl;
 class TextPlayer {
 private:
   int moves, sonars;
@@ -29,6 +30,7 @@ protected:
   Placement readPlacementForMove(string prompt);
   char toChooseAction();
   void addScores(Coordinate targetCor, int val);
+  void firing(std::shared_ptr<Board<char> > enemyBoard);
   std::shared_ptr<Ship<char>> createShip(string shipName, Placement p);
 
 public:
@@ -47,6 +49,7 @@ public:
   Placement readPlacement(string prompt);
   void doOnePlacement(string shipName);
   void doPlacementPhase();
+  void playOneTurn(std::shared_ptr<Board<char> > enemyBoard, BoardTextView enemyView, string enemyName);
 };
 
 #endif // BATTLESHIP_CPPVERSION_TEXTPLAYER_H

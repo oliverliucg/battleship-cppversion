@@ -45,10 +45,10 @@ TextPlayer &TextPlayer::operator=(const TextPlayer &other) {
 void TextPlayer::setupShipCreationList() {
   size_t numOfSubmarine = 2, numOfDestroyer = 3, numOfBattleship = 3,
          numOfCarrier = 2;
-  shipsToPlace[RectangleShip<char>::names[0]] = numOfSubmarine;
-  shipsToPlace[RectangleShip<char>::names[1]] = numOfDestroyer;
-  shipsToPlace[BattleShip<char>::name] = numOfBattleship;
-  shipsToPlace[Carrier<char>::name] = numOfCarrier;
+  shipsToPlace[nameOfSubmarine] = numOfSubmarine;
+  shipsToPlace[nameOfDestroyer] = numOfDestroyer;
+  shipsToPlace[nameOfBattleship] = numOfBattleship;
+  shipsToPlace[nameOfCarrier] = numOfCarrier;
 }
 
 bool TextPlayer::ifHasLost() { return theBoard->ifAllSunk(); }
@@ -66,6 +66,7 @@ bool TextPlayer::isInValid(string descr) {
 Coordinate TextPlayer::readCoordinate(string prompt) {
   string s = "";
   do {
+      std::cout << prompt << std::endl;
     std::cin >> s;
     if (s == "") {
       throw MyException(
@@ -106,7 +107,7 @@ char TextPlayer::toChooseAction() {
         if (sonars > 0) {
           cout << prompt_S;
         }
-        cout << "Please select one valid action above: ";
+        cout << "Please select one valid action above: " << std::endl;
         cin >> option;
         option = std::toupper(option);
         if (option == 'M' && moves == 0 || option == 'S' && sonars == 0 ||
@@ -171,13 +172,13 @@ Placement TextPlayer::readPlacement(string prompt) {
 
 std::shared_ptr<Ship<char>> TextPlayer::createShip(string shipName,
                                                    Placement p) {
-  if (shipName == RectangleShip<char>::names[0]) {
+  if (shipName == nameOfSubmarine) {
     return shipFactory->makeSubmarine(p);
-  } else if (shipName == RectangleShip<char>::names[1]) {
+  } else if (shipName == nameOfDestroyer) {
     return shipFactory->makeDestroyer(p);
-  } else if (shipName == BattleShip<char>::name) {
+  } else if (shipName == nameOfBattleship) {
     return shipFactory->makeBattleShip(p);
-  } else if (shipName == Carrier<char>::name) {
+  } else if (shipName == nameOfCarrier) {
     return shipFactory->makeCarrier(p);
   }
   return nullptr;
@@ -243,4 +244,33 @@ void TextPlayer::doPlacementPhase() {
     }
   } else {
   }
+}
+
+void TextPlayer::firing(std::shared_ptr<Board<char>> enemyBoard) {
+    Coordinate targetCor = readCoordinate("Please enter a valid coordinate to fire at:");
+    std::shared_ptr<Ship<char> > s = enemyBoard->fireAt(targetCor);
+    if(s == nullptr){
+        cout << "Player " << name << " missed!" << std::endl;
+    }else{
+        cout << "Player " << name << " hit a " << s->getName() << "on " << targetCor.toString() << endl;
+    }
+}
+
+void TextPlayer::playOneTurn(std::shared_ptr<Board<char>> enemyBoard, BoardTextView enemyView, string enemyName) {
+    cout << view.displayMyBoardWithEnemyNextToIt(enemyView, "Your ocean", "Player " + enemyName + "'s ocean");
+    if(moves == 0 && sonars == 0){
+        firing(enemyBoard);
+    }else{
+        char action = toChooseAction();
+        switch (action) {
+            case 'F':
+                firing(enemyBoard);
+                break;
+            case 'M':
+                break;
+            case 'S':
+                break;
+        }
+    }
+    cout << view.displayMyBoardWithEnemyNextToIt(enemyView, "Your ocean", "Player " + enemyName + "'s ocean");
 }

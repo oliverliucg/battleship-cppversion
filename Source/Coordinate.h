@@ -15,8 +15,8 @@ public:
   Coordinate(string descr);
   Coordinate(const Coordinate &other);
   Coordinate &operator=(const Coordinate &other);
-  int getRow() { return row; }
-  int getColumn() { return column; }
+  int getRow() const{ return row; }
+  int getColumn() const{ return column; }
   string toString();
   int toHashCode();
   friend bool operator==(const Coordinate &lhs, const Coordinate &rhs);

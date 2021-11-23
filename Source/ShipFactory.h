@@ -8,15 +8,16 @@
 #include "BattleShip.h"
 #include "Carrier.h"
 #include "RectangleShip.h"
+#include "ordinary.h"
 
 class ShipFactory : public AbstractShipFactory<char> {
 protected:
   std::shared_ptr<Ship<char>> createRectangleShip(Placement p, int w, int h,
-                                                  char letter);
+                                                  char letter, string name);
 
-  std::shared_ptr<Ship<char>> createBattleShip(Placement p, char letter);
+  std::shared_ptr<Ship<char>> createBattleShip(Placement p, char letter, string name);
 
-  std::shared_ptr<Ship<char>> createCarrier(Placement p, char letter);
+  std::shared_ptr<Ship<char>> createCarrier(Placement p, char letter, string name);
 
   virtual std::shared_ptr<Ship<char>> makeSubmarine(Placement p);
   virtual std::shared_ptr<Ship<char>> makeDestroyer(Placement p);

@@ -6,6 +6,7 @@
 
 template <typename T> class BasicShip : public Ship<T> {
 protected:
+    string name;
   Coordinate upperLeft;
   map<Coordinate, bool> myPieces;
   std::unique_ptr<ShipDisplayInfo<T>> myDisplayInfo;
@@ -14,10 +15,10 @@ protected:
   void checkCoordinateInThisShip(Coordinate c);
 
 public:
-  BasicShip(Coordinate _upperLeft, vector<Coordinate> where,
+  BasicShip(string _name, Coordinate _upperLeft, vector<Coordinate> where,
             std::unique_ptr<ShipDisplayInfo<T>> _myDisplayInfo,
             std::unique_ptr<ShipDisplayInfo<T>> _enemyDisplayInfo)
-      : upperLeft(_upperLeft), myDisplayInfo(std::move(_myDisplayInfo)),
+      : name(_name), upperLeft(_upperLeft), myDisplayInfo(std::move(_myDisplayInfo)),
         enemyDisplayInfo(std::move(_enemyDisplayInfo)) {
     for (const auto &x : where) {
       myPieces[x] = false;
@@ -29,9 +30,10 @@ public:
   virtual bool wasHitAt(Coordinate where);
   virtual void recordHitAt(Coordinate where);
   virtual void moveTo(Placement p);
-  virtual std::unique_ptr<T> getDisplayInfoAt(Coordinate where, bool myShip);
+  virtual std::shared_ptr<T> getDisplayInfoAt(Coordinate where, bool myShip);
   virtual vector<Coordinate> getCoordinates();
   virtual Coordinate getUpperLeft();
+  virtual string getName();
 };
 
 template <typename T>
@@ -51,6 +53,7 @@ template <typename T> bool BasicShip<T>::isSunk() {
     if (!it->second) {
       return false;
     }
+    ++it;
   }
   return true;
 }
@@ -67,7 +70,7 @@ template <typename T> bool BasicShip<T>::wasHitAt(Coordinate where) {
 template <typename T> void BasicShip<T>::moveTo(Placement p) {}
 
 template <typename T>
-unique_ptr<T> BasicShip<T>::getDisplayInfoAt(Coordinate where, bool myShip) {
+std::shared_ptr<T> BasicShip<T>::getDisplayInfoAt(Coordinate where, bool myShip) {
   checkCoordinateInThisShip(where);
   if (myShip) {
     return myDisplayInfo->getInfo(where, wasHitAt(where));
@@ -90,4 +93,7 @@ template <typename T> Coordinate BasicShip<T>::getUpperLeft() {
   return upperLeft;
 }
 
+template <typename T> string BasicShip<T>::getName() {
+    return name;
+}
 #endif // BATTLESHIP_CPPVERSION_BASICSHIP_H

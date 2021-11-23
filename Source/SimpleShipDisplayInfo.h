@@ -5,21 +5,21 @@
 
 template <typename T> class SimpleShipDisplayInfo : public ShipDisplayInfo<T> {
 protected:
-  T myData, onHit;
+    std::shared_ptr<T> myData, onHit;
 
 public:
-  SimpleShipDisplayInfo(T _myData, T _onHit);
-  std::unique_ptr<T> getInfo(Coordinate where, bool hit);
+  SimpleShipDisplayInfo(std::shared_ptr<T> _myData, std::shared_ptr<T> _onHit);
+    std::shared_ptr<T> getInfo(Coordinate where, bool hit);
 };
 
 template <typename T>
-SimpleShipDisplayInfo<T>::SimpleShipDisplayInfo(T _myData, T _onHit)
+SimpleShipDisplayInfo<T>::SimpleShipDisplayInfo(std::shared_ptr<T> _myData, std::shared_ptr<T> _onHit)
     : myData(_myData), onHit(_onHit) {}
 
 template <typename T>
-std::unique_ptr<T> SimpleShipDisplayInfo<T>::getInfo(Coordinate where,
+std::shared_ptr<T> SimpleShipDisplayInfo<T>::getInfo(Coordinate where,
                                                      bool hit) {
-  return hit ? std::make_unique<T>(onHit) : std::make_unique<T>(myData);
+  return hit ? onHit : myData;
 }
 
 #endif // BATTLESHIP_CPPVERSION_SIMPLESHIPDISPLAYINFO_H

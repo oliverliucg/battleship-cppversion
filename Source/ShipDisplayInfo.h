@@ -6,7 +6,7 @@ using std::unique_ptr;
 
 template <typename T> class ShipDisplayInfo {
 public:
-  virtual std::unique_ptr<T> getInfo(Coordinate where, bool hit) = 0;
+  virtual std::shared_ptr<T> getInfo(Coordinate where, bool hit) = 0;
 };
 
 #endif // BATTLESHIP_CPPVERSION_SHIPDISPLAYINFO_H

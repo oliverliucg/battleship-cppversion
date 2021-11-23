@@ -10,15 +10,11 @@ protected:
                                        int height);
 
 public:
-  RectangleShip(Coordinate _upperLeft, int width, int height,
+  RectangleShip(string _name, Coordinate _upperLeft, int width, int height,
                 std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
                 std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo);
-  RectangleShip(Coordinate _upperLeft, int width, int height, T data, T onHit);
-  static const vector<string> names;
+  RectangleShip(string _name, Coordinate _upperLeft, int width, int height, std::shared_ptr<T> data, std::shared_ptr<T> onHit);
 };
-
-template <typename T>
-const vector<string> RectangleShip<T>::names{"Submarine", "Destroyer"};
 
 template <typename T>
 vector<Coordinate> RectangleShip<T>::makeCoords(Coordinate upperLeft, int width,
@@ -35,17 +31,17 @@ vector<Coordinate> RectangleShip<T>::makeCoords(Coordinate upperLeft, int width,
 }
 template <typename T>
 RectangleShip<T>::RectangleShip(
-    Coordinate _upperLeft, int width, int height,
+    string _name, Coordinate _upperLeft, int width, int height,
     std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
     std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo)
-    : BasicShip<T>(_upperLeft, makeCoords(_upperLeft, width, height),
+    : BasicShip<T>(_name, _upperLeft, makeCoords(_upperLeft, width, height),
                    std::move(myDisplayInfo), std::move(enemyDisplayInfo)) {}
 
 template <typename T>
-RectangleShip<T>::RectangleShip(Coordinate _upperLeft, int width, int height,
-                                T data, T onHit)
-    : RectangleShip<T>(_upperLeft, width, height,
+RectangleShip<T>::RectangleShip(string _name, Coordinate _upperLeft, int width, int height,
+                                std::shared_ptr<T> data, std::shared_ptr<T> onHit)
+    : RectangleShip<T>(_name, _upperLeft, width, height,
                        std::make_unique<SimpleShipDisplayInfo<T>>(data, onHit),
-                       std::make_unique<SimpleShipDisplayInfo<T>>(T(), data)) {}
+                       std::make_unique<SimpleShipDisplayInfo<T>>(nullptr, data)) {}
 
 #endif // BATTLESHIP_CPPVERSION_RECTANGLESHIP_H

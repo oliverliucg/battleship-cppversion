@@ -23,9 +23,10 @@ public:
     virtual bool wasHitAt(Coordinate where) = 0;
     virtual void recordHitAt(Coordinate where) = 0;
     virtual void moveTo(Placement p) = 0;
-    virtual std::unique_ptr<T> getDisplayInfoAt(Coordinate where, bool myShip) = 0;
+    virtual std::shared_ptr<T> getDisplayInfoAt(Coordinate where, bool myShip) = 0;
     virtual vector<Coordinate> getCoordinates() = 0;
     virtual Coordinate getUpperLeft() = 0;
+    virtual std::string getName() = 0;
 };
 
 #endif //BATTLESHIP_CPPVERSION_SHIP_H

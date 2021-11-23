@@ -9,14 +9,12 @@ protected:
   static vector<Coordinate> makeCoords(Coordinate upperLeft, char orientation);
 
 public:
-  BattleShip(Coordinate _upperLeft, char _orientation,
+  BattleShip(string _name, Coordinate _upperLeft, char _orientation,
              std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
              std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo);
-  BattleShip(Coordinate _upperLeft, char _orientation, T data, T onHit);
-  static const string name;
+  BattleShip(string _name, Coordinate _upperLeft, char _orientation, std::shared_ptr<T> data, std::shared_ptr<T> onHit);
 };
 
-template <typename T> const string BattleShip<T>::name = "Battleship";
 
 template <typename T>
 vector<Coordinate> BattleShip<T>::makeCoords(Coordinate upperLeft,
@@ -55,17 +53,17 @@ vector<Coordinate> BattleShip<T>::makeCoords(Coordinate upperLeft,
 
 template <typename T>
 BattleShip<T>::BattleShip(
-    Coordinate _upperLeft, char _orientation,
+    string _name, Coordinate _upperLeft, char _orientation,
     std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
     std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo)
-    : BasicShip<T>(_upperLeft, makeCoords(_upperLeft, _orientation),
+    : BasicShip<T>(_name, _upperLeft, makeCoords(_upperLeft, _orientation),
                    std::move(myDisplayInfo), std::move(enemyDisplayInfo)) {}
 
 template <typename T>
-BattleShip<T>::BattleShip(Coordinate _upperLeft, char _orientation, T data,
-                          T onHit)
-    : BattleShip<T>(_upperLeft, _orientation,
+BattleShip<T>::BattleShip(string _name, Coordinate _upperLeft, char _orientation, std::shared_ptr<T> data,
+                          std::shared_ptr<T> onHit)
+    : BattleShip<T>(_name, _upperLeft, _orientation,
                     std::make_unique<SimpleShipDisplayInfo<T>>(data, onHit),
-                    std::make_unique<SimpleShipDisplayInfo<T>>(T(), data)) {}
+                    std::make_unique<SimpleShipDisplayInfo<T>>(nullptr, data)) {}
 
 #endif // BATTLESHIP_CPPVERSION_BATTLESHIP_H

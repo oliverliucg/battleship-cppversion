@@ -5,32 +5,8 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 
-add_executable(battleship_cppversion
-        AbstractShipFactory.h
-        App.cpp
-        App.h
-        BasicShip.h
-        BattleShip.h
-        BattleShipBoard.h
-        Board.h
-        BoardTextView.cpp
-        BoardTextView.h
-        Carrier.h
-        Coordinate.cpp
-        Coordinate.h
-        InBoundRuleChecker.h
-        MyException.h
-        NoCollisionRuleChecker.h
-        ordinary.cpp
-        ordinary.h
-        Placement.cpp
-        Placement.h
-        PlacementRuleChecker.h
-        RectangleShip.h
-        Ship.h
-        ShipDisplayInfo.h
-        ShipFactory.cpp
-        ShipFactory.h
-        SimpleShipDisplayInfo.h
-        TextPlayer.cpp
-        TextPlayer.h)
+add_executable(battleship_cppversion "")
+target_include_directories(battleship_cppversion PRIVATE Source)
+add_subdirectory(Source)
+#target_include_directories(battleship_cppversion PRIVATE Test)
+#add_subdirectory(Test)
