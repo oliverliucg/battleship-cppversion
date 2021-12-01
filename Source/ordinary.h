@@ -7,11 +7,13 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+
 using std::getline;
 using std::string;
 using std::stringstream;
 using std::vector;
 using std::unordered_map;
+
 int randomlyPickFrom(int a, int b);
 
 vector<string> splitStringByCharacter(string s, char c);
@@ -19,10 +21,10 @@ vector<string> splitStringByCharacter(string s, char c);
 string strToUppercase(string s);
 
 string strToLowercase(string s);
+extern const string nameOfBattleship;
+extern const string nameOfCarrier;
+extern const string nameOfSubmarine;
+extern const string nameOfDestroyer;
 
-const string nameOfBattleship = "Battleship";
-const string nameOfCarrier = "Carrier";
-const string nameOfSubmarine = "Submarine";
-const string nameOfDestroyer = "Destroyer";
-
+extern std::unordered_map<char, std::string> accessToFullName;
 #endif // BATTLESHIP_CPPVERSION_ORDINARY_H

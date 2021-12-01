@@ -31,6 +31,7 @@ protected:
   char toChooseAction();
   void addScores(Coordinate targetCor, int val);
   void firing(std::shared_ptr<Board<char> > enemyBoard);
+  void sonar(std::shared_ptr<Board<char> > enemyBoard);
   std::shared_ptr<Ship<char>> createShip(string shipName, Placement p);
 
 public:

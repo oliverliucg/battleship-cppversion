@@ -4,6 +4,7 @@
 #include "Ship.h"
 #include <string>
 #include <vector>
+#include <unordered_map>
 using std::shared_ptr;
 using std::string;
 using std::unique_ptr;
@@ -17,7 +18,7 @@ public:
   virtual shared_ptr<Ship<T>> fireAt(Coordinate c) = 0;
   virtual bool ifAllSunk() = 0;
   virtual bool move(Coordinate c, Placement p) = 0;
-  virtual int sonarScanning(Coordinate c, T target) = 0;
+  virtual std::unordered_map<T, size_t> sonarScanning(Coordinate c) = 0;
   virtual Coordinate pickSunkShip() = 0;
   virtual Coordinate randomlyPickShip() = 0;
   virtual Placement pickPlacement(vector<Placement> emptyPlacements) = 0;

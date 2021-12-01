@@ -1,5 +1,14 @@
 #include "ordinary.h"
 
+const string nameOfBattleship = "Battleship";
+const string nameOfCarrier = "Carrier";
+const string nameOfSubmarine = "Submarine";
+const string nameOfDestroyer = "Destroyer";
+std::unordered_map<char, std::string> accessToFullName{{tolower(nameOfBattleship[0]), nameOfBattleship},
+                                                       {tolower(nameOfCarrier[0]),    nameOfCarrier},
+                                                       {tolower(nameOfDestroyer[0]),  nameOfDestroyer},
+                                                       {tolower(nameOfSubmarine[0]), nameOfSubmarine}};
+
 int randomlyPickFrom(int a, int b) { return a + (int)(rand() * (b - a + 1)); }
 
 vector<string> splitStringByCharacter(string s, char c) {

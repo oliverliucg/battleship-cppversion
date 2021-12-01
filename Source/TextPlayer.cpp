@@ -246,16 +246,30 @@ void TextPlayer::doPlacementPhase() {
   }
 }
 
-void TextPlayer::firing(std::shared_ptr<Board<char>> enemyBoard) {
+void TextPlayer::firing(std::shared_ptr<Board<char> > enemyBoard) {
     Coordinate targetCor = readCoordinate("Please enter a valid coordinate to fire at:");
     std::shared_ptr<Ship<char> > s = enemyBoard->fireAt(targetCor);
     if(s == nullptr){
         cout << "Player " << name << " missed!" << std::endl;
     }else{
-        cout << "Player " << name << " hit a " << s->getName() << "on " << targetCor.toString() << endl;
+        cout << "Player " << name << " hit a " << s->getName() << " on " << targetCor.toString() << endl;
     }
 }
 
+void TextPlayer::sonar(std::shared_ptr<Board<char> > enemyBoard) {
+    Coordinate targetCor = readCoordinate("Please enter a valid coordinate for sonar detection:");
+    std::unordered_map<char, size_t> hashMap = enemyBoard->sonarScanning(targetCor);
+    if(hashMap.empty()){
+        cout << "Nothing detected" << endl;
+    }
+    std::string nameOfUnit = " square\n";
+    std::string nameOfUnits = " squares\n";
+    std::unordered_map<char, size_t>::iterator it = hashMap.begin();
+    while(it != hashMap.end()){
+        cout << accessToFullName[it->first] << "s occupy " << it->second <<(it->second == 1? nameOfUnit:nameOfUnits) ;
+        ++it;
+    }
+}
 void TextPlayer::playOneTurn(std::shared_ptr<Board<char>> enemyBoard, BoardTextView enemyView, string enemyName) {
     cout << view.displayMyBoardWithEnemyNextToIt(enemyView, "Your ocean", "Player " + enemyName + "'s ocean");
     if(moves == 0 && sonars == 0){
@@ -269,6 +283,7 @@ void TextPlayer::playOneTurn(std::shared_ptr<Board<char>> enemyBoard, BoardTextV
             case 'M':
                 break;
             case 'S':
+                sonar(enemyBoard);
                 break;
         }
     }
