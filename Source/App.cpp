@@ -25,6 +25,8 @@ void App::doAttackingPhase() {
         }
     }while(true);
 }
+
+//memory leak detection: leaks -atExit -- ./battleship_cppversion
 int main(int argv, char **argc) {
   std::shared_ptr<Board<char>> b1 =
       std::make_shared<BattleShipBoard<char>>(10, 20, 'X');
