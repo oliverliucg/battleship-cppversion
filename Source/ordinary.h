@@ -21,6 +21,7 @@ vector<string> splitStringByCharacter(string s, char c);
 string strToUppercase(string s);
 
 string strToLowercase(string s);
+
 extern const string nameOfBattleship;
 extern const string nameOfCarrier;
 extern const string nameOfSubmarine;

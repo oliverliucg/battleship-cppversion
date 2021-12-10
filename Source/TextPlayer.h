@@ -16,41 +16,58 @@
 using std::cin;
 using std::cout;
 using std::endl;
+
 class TextPlayer {
 private:
-  int moves, sonars;
-  bool isAI;
-  vector<vector<int>> scores_matrix;
+    int moves, sonars;
+    bool isAI;
+    vector<vector<int>> scores_matrix;
 
-  bool isInValid(string descr);
+    bool isInValid(string descr);
 
 protected:
-  void setupShipCreationList();
-  Coordinate readCoordinate(string prompt);
-  Placement readPlacementForMove(string prompt);
-  char toChooseAction();
-  void addScores(Coordinate targetCor, int val);
-  void firing(std::shared_ptr<Board<char> > enemyBoard);
-  void sonar(std::shared_ptr<Board<char> > enemyBoard);
-  std::shared_ptr<Ship<char>> createShip(string shipName, Placement p);
+    void setupShipCreationList();
+
+    Coordinate readCoordinate(string prompt);
+
+    Placement readPlacementForMove(string prompt);
+
+    char toChooseAction();
+
+    void addScores(Coordinate targetCor, int val);
+
+    void firing(std::shared_ptr<Board<char> > enemyBoard);
+
+    void sonar(std::shared_ptr<Board<char> > enemyBoard);
+
+    std::shared_ptr<Ship<char>> createShip(string shipName, Placement p);
 
 public:
-  shared_ptr<Board<char>> theBoard;
-  BoardTextView view;
-  shared_ptr<AbstractShipFactory<char>> shipFactory;
-  string name;
-  std::map<string, size_t> shipsToPlace;
-  int unit;
-  TextPlayer() : moves(3), sonars(3), isAI(false){};
-  TextPlayer(string name, std::shared_ptr<Board<char>> theBoard,
-             shared_ptr<AbstractShipFactory<char>> shipFactory);
-  TextPlayer(const TextPlayer &other);
-  TextPlayer &operator=(const TextPlayer &other);
-  bool ifHasLost();
-  Placement readPlacement(string prompt);
-  void doOnePlacement(string shipName);
-  void doPlacementPhase();
-  void playOneTurn(std::shared_ptr<Board<char> > enemyBoard, BoardTextView enemyView, string enemyName);
+    shared_ptr<Board<char>> theBoard;
+    BoardTextView view;
+    shared_ptr<AbstractShipFactory<char>> shipFactory;
+    string name;
+    std::map<string, size_t> shipsToPlace;
+    int unit;
+
+    TextPlayer() : moves(3), sonars(3), isAI(false) {};
+
+    TextPlayer(string name, std::shared_ptr<Board<char>> theBoard,
+               shared_ptr<AbstractShipFactory<char>> shipFactory);
+
+    TextPlayer(const TextPlayer &other);
+
+    TextPlayer &operator=(const TextPlayer &other);
+
+    bool ifHasLost();
+
+    Placement readPlacement(string prompt);
+
+    void doOnePlacement(string shipName);
+
+    void doPlacementPhase();
+
+    void playOneTurn(std::shared_ptr<Board<char> > enemyBoard, BoardTextView enemyView, string enemyName);
 };
 
 #endif // BATTLESHIP_CPPVERSION_TEXTPLAYER_H
