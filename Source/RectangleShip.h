@@ -12,8 +12,8 @@ protected:
 
 public:
     RectangleShip(string _name, Coordinate _upperLeft, int width, int height,
-                  std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
-                  std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo);
+                  std::shared_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
+                  std::shared_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo);
 
     RectangleShip(string _name, Coordinate _upperLeft, int width, int height, std::shared_ptr<T> data,
                   std::shared_ptr<T> onHit);
@@ -36,16 +36,16 @@ vector<Coordinate> RectangleShip<T>::makeCoords(Coordinate upperLeft, int width,
 template<typename T>
 RectangleShip<T>::RectangleShip(
         string _name, Coordinate _upperLeft, int width, int height,
-        std::unique_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
-        std::unique_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo)
+        std::shared_ptr<SimpleShipDisplayInfo<T>> myDisplayInfo,
+        std::shared_ptr<SimpleShipDisplayInfo<T>> enemyDisplayInfo)
         : BasicShip<T>(_name, _upperLeft, makeCoords(_upperLeft, width, height),
-                       std::move(myDisplayInfo), std::move(enemyDisplayInfo)) {}
+                       myDisplayInfo, enemyDisplayInfo) {}
 
 template<typename T>
 RectangleShip<T>::RectangleShip(string _name, Coordinate _upperLeft, int width, int height,
                                 std::shared_ptr<T> data, std::shared_ptr<T> onHit)
         : RectangleShip<T>(_name, _upperLeft, width, height,
-                           std::make_unique<SimpleShipDisplayInfo<T>>(data, onHit),
-                           std::make_unique<SimpleShipDisplayInfo<T>>(nullptr, data)) {}
+                           std::make_shared<SimpleShipDisplayInfo<T>>(data, onHit),
+                           std::make_shared<SimpleShipDisplayInfo<T>>(nullptr, data)) {}
 
 #endif // BATTLESHIP_CPPVERSION_RECTANGLESHIP_H
